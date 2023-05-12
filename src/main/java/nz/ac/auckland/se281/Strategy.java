@@ -1,7 +1,8 @@
 package nz.ac.auckland.se281;
 
-public interface Strategy {
-    int chooseFingers();
+import java.util.ArrayList;
 
-    int chooseSum(int fingers);
+public interface Strategy {
+
+    int[] decide();
 }

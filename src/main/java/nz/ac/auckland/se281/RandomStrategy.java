@@ -1,15 +1,16 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class RandomStrategy implements Strategy {
 
     @Override
-    public int chooseFingers() {
-        // this method randomly selects a number of fingers between 1 and 5
-        return Utils.getRandomNumber(1, 5);
-    }
+    public int[] decide() {
+        // this method chooses the sum randomly
+        int fingers = Utils.getRandomNumber(1, 5);
+        int sum = Utils.getRandomNumber(fingers + 1, fingers + 5);
 
-    @Override
-    public int chooseSum(int fingers) {
-        return Utils.getRandomNumber(fingers + 1, fingers + 5);
+        int[] selection = { fingers, sum };
+        return selection;
     }
 }

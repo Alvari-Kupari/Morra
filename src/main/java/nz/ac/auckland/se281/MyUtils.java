@@ -41,6 +41,23 @@ public class MyUtils {
         return false;
     }
 
+    public static String getInput() {
+        // next we must get the number of fingers and sum from the user
+        MessageCli.ASK_INPUT.printMessage();
+        String input = Utils.scanner.nextLine();
+
+        // next ensure the input is valid
+        while (!MyUtils.isValidGameInput(input)) {
+
+            // print the error message for invalid input
+            MessageCli.INVALID_INPUT.printMessage();
+
+            // ask for new input
+            input = Utils.scanner.nextLine();
+        }
+        return input;
+    }
+
     public static int[] splitString(String s) {
         // this method splits a string containing 2 numbers into 2 separate numbers
 

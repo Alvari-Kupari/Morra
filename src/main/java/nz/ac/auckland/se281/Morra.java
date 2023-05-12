@@ -1,11 +1,14 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import nz.ac.auckland.se281.Main.Difficulty;
 
 public class Morra {
+
   private int numMatches;
-  private String playerName;
   private Jarvis jarvis;
+  private Human human;
+  private ArrayList<Integer> fingersHistory = new ArrayList<>();
 
   public Morra() {
     this.numMatches = 0;
@@ -15,11 +18,11 @@ public class Morra {
   public void newGame(Difficulty difficulty, int pointsToWin, String[] options) {
     MessageCli.WELCOME_PLAYER.printMessage(options[0]);
 
-    // add the player name to the game
-    this.playerName = options[0];
-
     // create the opponent based on difficulty given
     this.jarvis = JarvisFactory.createJarvis(difficulty);
+
+    // create the human player
+    this.human = new Human(options[0]);
   }
 
   public void play() {
@@ -27,32 +30,36 @@ public class Morra {
     this.numMatches++;
     MessageCli.START_ROUND.printMessage(Integer.toString(this.numMatches));
 
-    // next we must get the number of fingers and sum from the user
-    MessageCli.ASK_INPUT.printMessage();
-    String input = Utils.scanner.nextLine();
+    // both players can now play
+    int[] humanChoice = human.play();
+    int[] jarvisChoice = jarvis.play();
 
-    // next ensure the input is valid
-    while (!MyUtils.isValidGameInput(input)) {
+    // print both hands
+    printHands(human.getName(), humanChoice[0], humanChoice[1], jarvisChoice[0], jarvisChoice[1]);
 
-      // print the error message for invalid input
-      MessageCli.INVALID_INPUT.printMessage();
-
-      // ask for new input
-      input = Utils.scanner.nextLine();
-    }
-
-    // now lets extract the numbers from the arguments provided
-    int fingers = MyUtils.splitString(input)[0];
-    int sum = MyUtils.splitString(input)[1];
-
-    // print the successfully formatted commands
-    MessageCli.PRINT_INFO_HAND.printMessage(this.playerName, Integer.toString(fingers), Integer.toString(sum));
-
-    // jarvis will choose their sum and fingers
-    this.jarvis.select();
-
+    // print the result
+    getResult(jarvisChoice, humanChoice);
   }
 
   public void showStats() {
+  }
+
+  public void getResult(int[] jarvis, int[] human) {
+    // this method determines who wins and prints the correct message
+    int totalSum = jarvis[0] + human[0];
+
+    if (jarvis[1] == totalSum) {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage("AI_WINS");
+    } else if (human[1] == totalSum) {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage("HUMAN_WINS");
+    } else {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage("DRAW");
+    }
+  }
+
+  public void printHands(String playerName, int fingers, int sum, int jarvisFingers, int jarvisSum) {
+    // this method prints both hands
+    MessageCli.PRINT_INFO_HAND.printMessage(playerName, Integer.toString(fingers), Integer.toString(sum));
+    MessageCli.PRINT_INFO_HAND.printMessage("Jarvis", Integer.toString(jarvisFingers), Integer.toString(jarvisSum));
   }
 }
