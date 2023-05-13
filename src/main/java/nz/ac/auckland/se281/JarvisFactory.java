@@ -11,6 +11,12 @@ public class JarvisFactory {
             case MEDIUM:
                 return new JarvisMedium();
 
+            case HARD:
+                return new JarvisHard();
+
+            case MASTER:
+                return new JarvisMaster();
+
             default:
                 return null;
         }
