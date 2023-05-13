@@ -8,6 +8,9 @@ public class JarvisFactory {
             case EASY:
                 return new JarvisEasy();
 
+            case MEDIUM:
+                return new JarvisMedium();
+
             default:
                 return null;
         }
