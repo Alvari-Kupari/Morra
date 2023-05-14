@@ -12,12 +12,13 @@ public class AverageStrategy implements Strategy {
     public int[] decide() {
         ArrayList<Integer> fingersHistory = morra.getFingersHistory();
 
-        // get the sumof the elements
+        // get the sum of the elements
         int sum = 0;
+
+        // loop through and find the total sum
         for (int i : fingersHistory) {
             sum += i;
         }
-        // then find averaage and round
 
         // randomly generate fingers
         int fingers = Utils.getRandomNumber(1, 5);
@@ -28,6 +29,7 @@ public class AverageStrategy implements Strategy {
         // round the result
         int sumGuess = Math.round(avg) + fingers;
 
+        // formate the selection
         int[] selection = { fingers, sumGuess };
         return selection;
     }

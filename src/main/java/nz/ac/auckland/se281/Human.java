@@ -21,6 +21,7 @@ public class Human {
         int fingers = MyUtils.splitString(input)[0];
         int sum = MyUtils.splitString(input)[1];
 
+        // format the selection
         int[] choice = { fingers, sum };
         return choice;
 

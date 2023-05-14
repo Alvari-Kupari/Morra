@@ -53,27 +53,7 @@ public class Morra {
     getResult(human.getName(), jarvisChoice, humanChoice);
 
     // now check if the game is over
-    if (pointToWin == jarvisWins) {
-      // print the end game message and exit
-      MessageCli.END_GAME.printMessage("Jarvis", Integer.toString(this.numMatches));
-
-      // reset the game
-      reset();
-
-      // then finish the game
-      finishGame();
-      return;
-    }
-
-    // now check if the human won
-    else if (pointToWin == playerWins) {
-      MessageCli.END_GAME.printMessage(human.getName(), Integer.toString(this.numMatches));
-
-      // reset the game
-      reset();
-
-      // then finish the game
-      finishGame();
+    if (GameOver()) {
       return;
     }
 
@@ -90,6 +70,7 @@ public class Morra {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
+
     // print the stats for jarvis
     MessageCli.PRINT_PLAYER_WINS.printMessage("Jarvis", Integer.toString(jarvisWins),
         Integer.toString(pointToWin - jarvisWins));
@@ -110,25 +91,31 @@ public class Morra {
     // find the actual sum
     int totalSum = jarvis[0] + human[0];
 
-    // first check if both players got it right
-    if (jarvis[1] == totalSum && human[1] == totalSum) {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage("DRAW");
+    // establish who won
+    boolean jarvisWon = jarvis[1] == totalSum;
+    boolean humanWon = human[1] == totalSum;
 
-    } else if (jarvis[1] == totalSum) {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage("AI_WINS");
+    // find out what the message should be
+    String result;
+
+    if (jarvisWon && !humanWon) {
+      result = "AI_WINS";
 
       // then update the stats for jarvis
       this.jarvisWins++;
 
-    } else if (human[1] == totalSum) {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage("HUMAN_WINS");
+    } else if (!jarvisWon && humanWon) {
+      result = "HUMAN_WINS";
 
       // then update the number of player wins
       this.playerWins++;
 
     } else {
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage("DRAW");
+      result = "DRAW";
     }
+    // now print who won
+    MessageCli.PRINT_OUTCOME_ROUND.printMessage(result);
+
   }
 
   public ArrayList<Integer> getFingersHistory() {
@@ -152,5 +139,31 @@ public class Morra {
     // this method resets the game once a game is finished
     this.numMatches = -1;
     this.pointToWin = -1;
+  }
+
+  public boolean GameOver() {
+    // find out if someone has won
+    boolean jarvisWon = pointToWin == jarvisWins;
+    boolean humanWon = pointToWin == playerWins;
+
+    // if neither won then exit and return false
+    if (!jarvisWon && !humanWon) {
+      return false;
+    }
+
+    // now find the correct string for the player who won
+    String playerWon = jarvisWon ? "Jarvis" : human.getName();
+
+    // print the end game message and exit
+    MessageCli.END_GAME.printMessage(playerWon, Integer.toString(this.numMatches));
+
+    // reset all stats
+    reset();
+
+    // then finish the game
+    finishGame();
+
+    return true;
+
   }
 }
