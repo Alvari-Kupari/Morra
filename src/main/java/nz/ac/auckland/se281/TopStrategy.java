@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TopStrategy implements Strategy {
 
-    public Morra morra;
+    private Morra morra;
 
     public TopStrategy(Morra morra) {
         this.morra = morra;

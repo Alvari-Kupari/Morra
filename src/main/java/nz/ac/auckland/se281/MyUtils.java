@@ -1,7 +1,5 @@
 package nz.ac.auckland.se281;
 
-import java.util.Arrays;
-
 //this class contains several helper methods
 
 public class MyUtils {

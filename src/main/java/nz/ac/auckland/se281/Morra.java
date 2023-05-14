@@ -16,6 +16,7 @@ public class Morra {
   public Morra() {
     this.numMatches = -1;
     this.pointToWin = -1;
+
   }
 
   public void newGame(Difficulty difficulty, int pointsToWin, String[] options) {
@@ -53,7 +54,7 @@ public class Morra {
     getResult(human.getName(), jarvisChoice, humanChoice);
 
     // now check if the game is over
-    if (GameOver()) {
+    if (gameOver()) {
       return;
     }
 
@@ -141,7 +142,7 @@ public class Morra {
     this.pointToWin = -1;
   }
 
-  public boolean GameOver() {
+  public boolean gameOver() {
     // find out if someone has won
     boolean jarvisWon = pointToWin == jarvisWins;
     boolean humanWon = pointToWin == playerWins;
