@@ -65,8 +65,10 @@ public class Morra {
     MessageCli.PRINT_INFO_HAND.printMessage("Jarvis", Integer.toString(jarvis[0]), Integer.toString(jarvis[1]));
 
     int totalSum = jarvis[0] + human[0];
-
-    if (jarvis[1] == totalSum) {
+    // first check if both players got it right
+    if (jarvis[1] == totalSum && human[1] == totalSum) {
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage("DRAW");
+    } else if (jarvis[1] == totalSum) {
       MessageCli.PRINT_OUTCOME_ROUND.printMessage("AI_WINS");
     } else if (human[1] == totalSum) {
       MessageCli.PRINT_OUTCOME_ROUND.printMessage("HUMAN_WINS");
