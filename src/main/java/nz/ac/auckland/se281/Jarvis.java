@@ -2,14 +2,14 @@ package nz.ac.auckland.se281;
 
 public abstract class Jarvis {
 
-    protected Strategy strategy;
+  protected Strategy strategy;
 
-    public int[] play() {
+  public int[] play() {
 
-        return strategy.decide();
-    }
+    return strategy.decide();
+  }
 
-    public void updateStrategy(Status status) {
-    }
+  public void updateStrategy(Status status) {
+  }
 
 }
