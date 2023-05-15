@@ -9,7 +9,7 @@ public abstract class Jarvis {
     return strategy.decide();
   }
 
-  public void updateStrategy(Morra morra) {
+  public void updateStrategy(Status status) {
   }
 
 }

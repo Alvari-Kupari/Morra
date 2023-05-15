@@ -3,14 +3,14 @@ package nz.ac.auckland.se281;
 import java.util.ArrayList;
 
 public class AverageStrategy implements Strategy {
-    private Morra morra;
+    private Status status;
 
-    public AverageStrategy(Morra morra) {
-        this.morra = morra;
+    public AverageStrategy(Status status) {
+        this.status = status;
     }
 
     public int[] decide() {
-        ArrayList<Integer> fingersHistory = morra.getFingersHistory();
+        ArrayList<Integer> fingersHistory = status.getFingersHistory();
 
         // get the sum of the elements
         int sum = 0;

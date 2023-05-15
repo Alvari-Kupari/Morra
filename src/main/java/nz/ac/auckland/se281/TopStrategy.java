@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class TopStrategy implements Strategy {
 
-    private Morra morra;
+    private Status status;
 
-    public TopStrategy(Morra morra) {
-        this.morra = morra;
+    public TopStrategy(Status status) {
+        this.status = status;
     }
 
     public int[] decide() {
         // initialise the arraylist
-        ArrayList<Integer> fingersHistory = morra.getFingersHistory();
+        ArrayList<Integer> fingersHistory = status.getFingersHistory();
 
         // guess the number of fingers
         int fingers = Utils.getRandomNumber(1, 5);

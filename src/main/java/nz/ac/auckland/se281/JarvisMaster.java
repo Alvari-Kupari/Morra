@@ -10,14 +10,14 @@ public class JarvisMaster extends Jarvis {
   }
 
   @Override
-  public void updateStrategy(Morra morra) {
+  public void updateStrategy(Status status) {
     // check if at least 3 rounds have been played
-    if (morra.getNumMatches() >= 3) {
+    if (status.getRounds() >= 3) {
       // if so switch between the cycles
       if (cycle) {
-        this.strategy = new AverageStrategy(morra);
+        this.strategy = new AverageStrategy(status);
       } else {
-        this.strategy = new TopStrategy(morra);
+        this.strategy = new TopStrategy(status);
       }
       // negate the cycle
       this.cycle = !this.cycle;

@@ -1,21 +1,19 @@
 package nz.ac.auckland.se281;
 
-import java.util.ArrayList;
 import nz.ac.auckland.se281.Main.Difficulty;
 
 public class Morra {
 
-  private int numMatches;
   private Jarvis jarvis;
   private Human human;
-  private ArrayList<Integer> fingersHistory = new ArrayList<>();
   private int pointToWin;
   private int jarvisWins;
   private int playerWins;
+  private Status status;
 
   public Morra() {
-    this.numMatches = -1;
     this.pointToWin = -1;
+    this.status = new Status(-1);
 
   }
 
@@ -38,13 +36,13 @@ public class Morra {
 
   public void play() {
     // first check if there is a game
-    if (numMatches == -1) {
+    if (status.getRounds() == -1) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
     // increment numMatches and print the start round message
-    this.numMatches++;
-    MessageCli.START_ROUND.printMessage(Integer.toString(this.numMatches));
+    status.incrementRounds();
+    MessageCli.START_ROUND.printMessage(Integer.toString(status.getRounds()));
 
     // both players can now play
     int[] humanChoice = human.play();
@@ -59,15 +57,15 @@ public class Morra {
     }
 
     // add the humans choice to the database
-    fingersHistory.add(humanChoice[0]);
+    status.updateHistory(humanChoice[0]);
 
     // update new stratgies
-    jarvis.updateStrategy(this);
+    jarvis.updateStrategy(status);
   }
 
   public void showStats() {
     // first ensure there is a game
-    if (numMatches == -1) {
+    if (status.getRounds() == -1) {
       MessageCli.GAME_NOT_STARTED.printMessage();
       return;
     }
@@ -119,26 +117,18 @@ public class Morra {
 
   }
 
-  public ArrayList<Integer> getFingersHistory() {
-    return this.fingersHistory;
-  }
-
-  public int getNumMatches() {
-    return this.numMatches;
-  }
-
   public void reset() {
 
     // reset the match
     this.jarvisWins = 0;
     this.playerWins = 0;
-    this.numMatches = 0;
-    fingersHistory.clear();
+    status.setRounds(0);
+    status.clearHistory();
   }
 
   public void finishGame() {
     // this method resets the game once a game is finished
-    this.numMatches = -1;
+    status.setRounds(-1);
     this.pointToWin = -1;
   }
 
@@ -156,7 +146,7 @@ public class Morra {
     String playerWon = jarvisWon ? "Jarvis" : human.getName();
 
     // print the end game message and exit
-    MessageCli.END_GAME.printMessage(playerWon, Integer.toString(this.numMatches));
+    MessageCli.END_GAME.printMessage(playerWon, Integer.toString(status.getRounds()));
 
     // reset all stats
     reset();
