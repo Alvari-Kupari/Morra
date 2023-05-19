@@ -31,7 +31,7 @@ public class MyUtils {
     int sum = Integer.parseInt(arguments[1]);
 
     // next check if the numbers are in the correct ranges
-    if (fingers <= 5 && fingers >= 0 && sum >= 1 && sum <= 10) {
+    if (fingers <= 5 && fingers >= 1 && sum >= 1 && sum <= 10) {
       // if so the result must be valid
       return true;
     }
